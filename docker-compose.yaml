@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx1:
+    image: nginx
+    volumes:
+      - ./index.1.html:/usr/share/nginx/html/index.html
+    networks:
+      - load_balancer
+
+
+  nginx2:
+    image: nginx
+    volumes:
+      - ./index.2.html:/usr/share/nginx/html/index.html
+    networks:
+      - load_balancer
+
+
+  nginx3:
+    image: nginx
+    volumes:
+      - ./index.3.html:/usr/share/nginx/html/index.html
+    networks:
+      - load_balancer
+  
+  nginx4:
+    image: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - load_balancer
+
+networks:
+  load_balancer:
+    driver: bridge

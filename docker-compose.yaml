@@ -15,7 +15,6 @@ services:
     networks:
       - load_balancer
 
-
   web-server-go1:
     image: web-server1
     ports:

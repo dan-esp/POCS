@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   nginx1:
@@ -6,29 +6,37 @@ services:
     volumes:
       - ./index.1.html:/usr/share/nginx/html/index.html
     networks:
-      - load_balancer
+      net_go_app:
+        ipv4_address: 10.100.17.2
 
   nginx2:
     image: nginx
     volumes:
       - ./index.2.html:/usr/share/nginx/html/index.html
     networks:
-      - load_balancer
+      net_go_app:
+        ipv4_address: 10.100.17.3
 
   web-server-go1:
     image: web-server1
     ports:
       - "8080:3000"
     networks:
-      - load_balancer
-  
+      net_go_app:
+        ipv4_address: 10.100.17.4
+
   nginx4:
     image: nginx
     volumes:
       - ./default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - load_balancer
+      net_go_app:
+        ipv4_address: 10.100.17.5
 
 networks:
-  load_balancer:
+  net_go_app:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.100.17.0/24"
